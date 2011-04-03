@@ -1,7 +1,7 @@
 [Project]
 FileName=klog.dev
 Name=klog
-UnitCount=2
+UnitCount=3
 Type=0
 Ver=1
 ObjFiles=
@@ -12,7 +12,7 @@ ResourceIncludes=
 MakeIncludes=
 Compiler=
 CppCompiler=
-Linker=
+Linker=-lws2_32_@@_
 IsCpp=0
 Icon=
 ExeOutput=
@@ -59,6 +59,16 @@ AutoIncBuildNr=0
 
 [Unit2]
 FileName=layout.h
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit3]
+FileName=irc.c
 CompileCpp=0
 Folder=
 Compile=1

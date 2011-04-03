@@ -7,7 +7,7 @@
 #include <time.h>
 #include <windows.h>
 #include <string.h>
-#include <winsock.h>
+#include <winsock2.h>
 #include "layout.h"
 
 time_t t;
