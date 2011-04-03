@@ -1,0 +1,4 @@
+*.exe
+*.exe.Manifest
+*.o
+out.txt
