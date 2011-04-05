@@ -1,13 +1,13 @@
 [Project]
 FileName=klog.dev
 Name=klog
-UnitCount=3
+UnitCount=5
 Type=0
 Ver=1
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=klog_private.rc
+PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Compiler=
@@ -25,9 +25,9 @@ CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
 IncludeVersionInfo=0
-SupportXPThemes=1
+SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0000000000000000000000
+CompilerSettings=0000000001100000000000
 
 [Unit1]
 FileName=klog.c
@@ -69,6 +69,26 @@ BuildCmd=
 
 [Unit3]
 FileName=irc.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
+FileName=klog.h
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=config.h
 CompileCpp=0
 Folder=
 Compile=1
