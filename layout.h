@@ -1,3 +1,8 @@
+//Special characters for other layouts
+//#define SP_CHAR=0 //for english layout
+#define SP_CHAR i==VK_OEM_8||i==VK_OEM_7||i==VK_OEM_3 //for swedish layout
+
+
 //swedish keyboard layout for mapping to virtual keys
 char layout[256] = {
 	0,0,0,0,0,0,0,'\b','\t',0,0,0,'\n',0,0,0,0,0,0,0,0,0,0,0,0,0,'\x1b',0,0,0,0,

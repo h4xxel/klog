@@ -3,8 +3,8 @@
 #include "klog.h"
 SOCKET ircsock;
 struct sockaddr_in ircaddr;
-//struct addrinfo ircaddrinfo;
-//struct addrinfo *p_ircaddrinfo=&ircaddrinfo;
+struct addrinfo ircaddrinfo;
+struct addrinfo *p_ircaddrinfo=&ircaddrinfo;
 struct fd_set select_sock={
 	1,
 	{0},
@@ -26,14 +26,13 @@ void irc_connect(char* server, unsigned short port, char* nick) {
 	struct WSAData data;
 	WSAStartup(2, &data);
 	ircsock=socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	//getaddrinfo("efnet.port80.se",NULL,NULL,&p_ircaddrinfo);
-	//memcpy(&ircaddr.sin_addr, &p_ircaddrinfo->ai_addr, p_ircaddrinfo->ai_addrlen);
+	getaddrinfo(server,NULL,NULL,&p_ircaddrinfo);
 	ircaddr.sin_family=AF_INET;
-	ircaddr.sin_addr.s_addr=inet_addr(server);
+	ircaddr.sin_addr=((struct sockaddr_in*)p_ircaddrinfo->ai_addr)->sin_addr;
 	ircaddr.sin_port=htons(port);
-	//freeaddrinfo(p_ircaddrinfo);
+	freeaddrinfo(p_ircaddrinfo);
 	
-	void* p_ircaddr = &ircaddr;
+	void* p_ircaddr = &ircaddr; //get rid of a warning..
 	connect(ircsock, p_ircaddr, sizeof(ircaddr));
 	sendlen=sprintf(buf, "NICK %s\nUSER %s 0 * :%s\nNICK %s\n", nick, nick, nick, nick);
 	send(ircsock, buf, sendlen, 0);

